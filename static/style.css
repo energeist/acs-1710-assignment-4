@@ -10,7 +10,7 @@ main {
 }
 
 main > section {
-    background-color: #fff;
+    background-color: lightyellow;
     border: 1px solid #007a99;
     box-shadow: 5px 5px 5px #999;
     padding: 20px;
@@ -25,4 +25,9 @@ fieldset {
 h1 a {
     color: #000;
     text-decoration: none;
+}
+
+img {
+    background-color: lightblue;
+    border: 2px solid black;
 }

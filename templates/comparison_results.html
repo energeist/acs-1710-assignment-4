@@ -6,30 +6,54 @@
         TODO: Replace the hard-coded cities and date below with data from the 
         server.
     #}
-    <h1>Weather in [CITY1] and [CITY2]</h1>
-    <p>[TODAYS_DATE]</p>
-
-
+    
+    
     {#
         TODO: Add the temperature, description, and min & max temperature below.
         Replace 'F' with the appropriate units.
     #}
+    {% if city_1_info['one_passed'] and city_2_info['two_passed'] %}
+    <h1>Weather in {{city1}}, {{city_1_info['country']}} and {{city2}}, {{city_2_info['country']}}</h1>
+    <p>Current local date and time: {{date.strftime('%m-%d-%Y, at %H:%M:%S')}}</p>
     <p>
-        It is [NUM_DEGREES] [UNITS] [WARMER/COLDER] in [CITY1] than in [CITY2] today.
+        {% if city_1_info['temp'] > city_2_info['temp'] %}
+            It is {{"%0.2f"|format(city_1_info['temp'] - city_2_info['temp'])}} &#176{{units_letter}} warmer in {{city1}} than in {{city2}} right now.
+        {% elif city_1_info['temp'] == city_2_info['temp'] %}
+            It is {{city_1_info['temp']}} &#176{{units_letter}} in both {{city1}} and {{city2}} right now.
+        {% else %}
+            It is {{"%0.2f"|format(city_2_info['temp'] - city_1_info['temp'])}} &#176{{units_letter}} colder in {{city1}} than in {{city2}} right now.
+        {% endif %}
     </p>
-
     <p>
-        The humidity in [CITY1] is [AMOUNT] [GREATER/LESS] than in [CITY2].
+        {% if city_1_info['humidity'] > city_2_info['humidity'] %}
+            The humidity in {{city1}} is {{"%0.2f"|format(city_1_info['humidity'] - city_2_info['humidity'])}}% greater than in {{city2}}}.
+        {% elif city_1_info['humidity'] == city_2_info['humidity'] %}
+            The humidity is {{city_1_info['humidity']}}% in both {{city1}} and {{city2}} right now.
+        {% else %}
+            The humidity is {{"%0.2f"|format(city_2_info['humidity'] - city_1_info['humidity'])}}% lower in {{city1}} than in {{city2}} right now.
+        {% endif %}
     </p>
-
     <p>
-        The wind speed in [CITY1] is [AMOUNT] [GREATER/LESS] than in [CITY2].
+        {% if city_1_info['wind_speed'] > city_2_info['wind_speed'] %}
+            The wind speed is {{"%0.2f"|format(city_1_info['wind_speed'] - city_2_info['wind_speed'])}} miles/hour greater in {{city1}} than in {{city2}} right now.
+        {% elif city_1_info['wind_speed'] == city_2_info['wind_speed'] %}
+            The wind speed is {{city_1_info['wind_speed']}} miles/hour in both {{city1}} and {{city2}} right now.
+        {% else %}
+            The wind speed is {{"%0.2f"|format(city_2_info['wind_speed'] - city_1_info['wind_speed'])}} miles/hour lower in {{city1}} than in {{city2}} right now.
+        {% endif %}
     </p>
-
     <p>
-        The sun sets in [CITY1] [HOURS] hours [EARLIER/LATER] than in [CITY2].
+        {% if city_1_info['sunset'] < city_2_info['sunset'] %}
+            The sun sets in {{city1}} {{(city_2_info['sunset']- city_1_info['sunset'])}} (hours:minutes:seconds) earlier than in {{city2}}.    
+        {% elif city_1_info['sunset'] > city_2_info['sunset'] %}
+            The sun sets in {{city1}} {{(city_1_info['sunset'] - city_2_info['sunset'])}} (hours:minutes:seconds) later than in {{city2}}.    
+        {% else %}
+            The sun sets at the same time in {{city1}} and {{city2}}
+        {% endif %}   
     </p>
-    
+    {% else %}
+        <p>404 - One of your locations is invalid or blank!</p>
+    {% endif %}
+    <a href = '../'>Return to the input page</a>
 </section>
-
 {% endblock %}

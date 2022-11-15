@@ -3,38 +3,33 @@
 
 <section class="weather-form">
     <h2>What's the weather like today?</h1>
-
     <form action="/results" method="GET">
         <fieldset>
             <legend>Please enter your information:</legend>
-
             <p>
                 <label>
                     Please enter your city: <br>
-                    <input type="text" name="city">
+                    <input type="text" name="city" required>
                 </label>
             </p>
-
             <p>
                 Please choose your desired units: <br>
                 <label>
-                    <input type="radio" name="units" value="metric">
+                    <input type="radio" name="units" value="metric" required>
                     Celsius
                 </label><br>
                 <label>
-                    <input type="radio" name="units" value="imperial">
+                    <input type="radio" name="units" value="imperial" required>
                     Fahrenheit
                 </label><br>
                 <label>
-                    <input type="radio" name="units" value="kelvin">
+                    <input type="radio" name="units" value="kelvin" required>
                     Kelvin
                 </label>
             </p>
-
             <p>
                 <input type="submit" value="Submit">
             </p>
-
         </fieldset>
     </form>
 </section>
@@ -43,37 +38,33 @@
         <h2>Compare Two Cities</h1>
         <fieldset>
             <legend>Please enter your information:</legend>
-
             <p>
                 <label>
                     Please enter the first city: <br>
-                    <input type="text" name="city1">
+                    <input type="text" name="city1" required>
                 </label>
             </p>
-
             <p>
                 <label>
                     Please enter the second city: <br>
-                    <input type="text" name="city2">
+                    <input type="text" name="city2" required>
                 </label>
             </p>
-
             <p>
                 Please choose your desired units: <br>
                 <label>
-                    <input type="radio" name="units" value="metric">
+                    <input type="radio" name="units" value="metric" required>
                     Celsius
                 </label><br>
                 <label>
-                    <input type="radio" name="units" value="imperial">
+                    <input type="radio" name="units" value="imperial" required>
                     Fahrenheit
                 </label><br>
                 <label>
-                    <input type="radio" name="units" value="kelvin">
+                    <input type="radio" name="units" value="kelvin" required>
                     Kelvin
                 </label>
             </p>
-
             <p>
                 <input type="submit" value="Submit">
             </p>
