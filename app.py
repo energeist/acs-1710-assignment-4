@@ -28,9 +28,11 @@ API_URL = 'http://api.openweathermap.org/data/2.5/weather'
 def make_api_call(update_city, params):
     """calls the Openweather API and returns results in JSON format"""
     params['q'] = update_city
-    result_json = requests.get(API_URL, params=params).json()
+    try:
+        result_json = requests.get(API_URL, params=params).json()
+    except KeyError:
+        result_json['cod'] = '404'
     return result_json
-
 
 @app.route('/')
 def home():
@@ -59,12 +61,6 @@ def results():
     'units': units 
     }
 
-    def make_api_call(update_city):
-        """calls the Openweather API and returns results in JSON format"""
-        params['q'] = update_city
-        result_json = requests.get(API_URL, params=params).json()
-        return result_json
-
     # TODO: Enter query parameters here for the 'appid' (your api key),
     # the city, and the units (metric or imperial).
     # See the documentation here: https://openweathermap.org/current
@@ -77,12 +73,11 @@ def results():
     # For the sunrise & sunset variables, I would recommend to turn them into
     # datetime objects. You can do so using the `datetime.fromtimestamp()` 
     # function.
-    result_json = make_api_call(city)
-    pp.pprint(result_json)
-    print()
-    icon = result_json['weather'][0]['icon']
-    image = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
-    if result_json['cod'] == '404' or result_json['cod'] == '400':
+    try:
+        result_json = make_api_call(city, params)
+        icon = result_json['weather'][0]['icon']
+        image = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
+    except KeyError:
         context = {
             'passed': False
         }
@@ -115,7 +110,6 @@ def comparison_results():
 
     params = {
     'appid': API_KEY,
-    'q': city1,
     'units': units 
     }
 
@@ -128,14 +122,6 @@ def comparison_results():
     # TODO: Make 2 API calls, one for each city. HINT: You may want to write a 
     # helper function for this!
     result_json = make_api_call(city1)
-    print("JSON ONE")
-    variable = '        st uff         '
-    print(variable)
-    variable = variable.strip()
-    print(variable)
-    print(city1)
-    print(city2)
-    print(result_json)
     if result_json['cod'] == '404' or result_json['cod'] == '400':
         city_info_1 = {
             'one_passed': False
@@ -152,9 +138,6 @@ def comparison_results():
             'sunset': datetime.fromtimestamp(result_json['sys']['sunset']),
         }
     result_json = make_api_call(city2)
-    print("JSON TWO")
-    print()
-    print(result_json)
     if result_json['cod'] == '404' or result_json['cod'] == '400':
         city_info_2 = {
             'two_passed': False

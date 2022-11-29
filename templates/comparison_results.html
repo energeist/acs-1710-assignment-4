@@ -14,7 +14,6 @@
     #}
     {% if city_1_info['one_passed'] and city_2_info['two_passed'] %}
     <h1>Weather in {{city1}}, {{city_1_info['country']}} and {{city2}}, {{city_2_info['country']}}</h1>
-    <p>Current local date and time: {{date.strftime('%m-%d-%Y, at %H:%M:%S')}}</p>
     <p>
         {% if city_1_info['temp'] > city_2_info['temp'] %}
             It is {{"%0.2f"|format(city_1_info['temp'] - city_2_info['temp'])}} &#176{{units_letter}} warmer in {{city1}} than in {{city2}} right now.
@@ -26,7 +25,7 @@
     </p>
     <p>
         {% if city_1_info['humidity'] > city_2_info['humidity'] %}
-            The humidity in {{city1}} is {{"%0.2f"|format(city_1_info['humidity'] - city_2_info['humidity'])}}% greater than in {{city2}}}.
+            The humidity in {{city1}} is {{"%0.2f"|format(city_1_info['humidity'] - city_2_info['humidity'])}}% greater than in {{city2}}.
         {% elif city_1_info['humidity'] == city_2_info['humidity'] %}
             The humidity is {{city_1_info['humidity']}}% in both {{city1}} and {{city2}} right now.
         {% else %}
