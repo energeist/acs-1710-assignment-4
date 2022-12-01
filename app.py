@@ -21,11 +21,18 @@ pp = PrettyPrinter(indent=4)
 API_KEY = os.getenv('OW_API_KEY')
 API_URL = 'http://api.openweathermap.org/data/2.5/weather'
 
+# initialize params object for API requests
+params = {
+'appid': API_KEY,
+}
+
 ################################################################################
 ## ROUTES
 ################################################################################
 
-def make_api_call(update_city, params):
+# Helper function for API calls
+
+def make_api_call(update_city):
     """calls the Openweather API and returns results in JSON format"""
     params['q'] = update_city
     try:
@@ -55,11 +62,7 @@ def results():
     city = request.args.get("city").strip()
     units = request.args.get("units")
 
-    params = {
-    'appid': API_KEY,
-    'q': city,
-    'units': units 
-    }
+    params['units'] = units 
 
     # TODO: Enter query parameters here for the 'appid' (your api key),
     # the city, and the units (metric or imperial).
@@ -74,7 +77,7 @@ def results():
     # datetime objects. You can do so using the `datetime.fromtimestamp()` 
     # function.
     try:
-        result_json = make_api_call(city, params)
+        result_json = make_api_call(city)
         icon = result_json['weather'][0]['icon']
         image = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
     except KeyError:
@@ -110,17 +113,12 @@ def comparison_results():
 
     params = {
     'appid': API_KEY,
-    'units': units 
+    'units': units, 
     }
-
-    def make_api_call(update_city):
-        """calls the Openweather API and returns results in JSON format"""
-        params['q'] = update_city
-        result_json = requests.get(API_URL, params=params).json()
-        return result_json
 
     # TODO: Make 2 API calls, one for each city. HINT: You may want to write a 
     # helper function for this!
+
     result_json = make_api_call(city1)
     if result_json['cod'] == '404' or result_json['cod'] == '400':
         city_info_1 = {
